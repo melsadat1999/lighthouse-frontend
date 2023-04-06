@@ -1,0 +1,180 @@
+<div class="container mx-auto">
+  <div class="mt-6">
+    <button
+      routerLink="./addProject"
+      class="capitalize bg-green-300 text-sm px-4 py-3 rounded-md"
+    >
+      add project
+    </button>
+  </div>
+  <div class="overflow-x-auto mt-3">
+    <div class="inline-block min-w-full py-2">
+      <div class="overflow-hidden">
+        <table class="min-w-full text-left text-sm font-light">
+          <thead class="border-b font-medium bg-gray-200">
+            <tr>
+              <th scope="col" class="px-6 py-4">project name</th>
+              <!-- <th scope="col" class="px-6 py-4">platform</th> -->
+              <th scope="col" class="px-6 py-4">backend</th>
+              <th scope="col" class="px-6 py-4">frontend</th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                performance
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                accessibility
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                bestPractices
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                seo
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                pwa
+              </th>
+              <th scope="col" class="px-6 py-4">created at</th>
+              <th scope="col" class="px-6 py-4">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b" *ngFor="let project of projectList">
+              <ng-container>
+                <td class="whitespace-nowrap px-6 py-4">
+                  {{ project.projectName }}
+                </td>
+                <!-- <td class="whitespace-nowrap px-6 py-4">
+                  {{ project.platform }}
+                </td> -->
+                <td class="whitespace-nowrap px-6 py-4">
+                  {{ project.backend }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  {{ project.frontend }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!project.loading">
+                    {{
+                      project?.reports[project?.reports.length - 1]?.performance
+                        | percent
+                    }} %
+                    <app-progress-bar
+                      [percent]="
+                        project?.reports[project?.reports.length - 1]
+                          ?.performance | percent
+                      "
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="project.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!project.loading">
+                    {{
+                      project?.reports[project?.reports.length - 1]
+                        ?.accessibility | percent
+                    }} %
+                    <app-progress-bar
+                      [percent]="
+                        project?.reports[project?.reports.length - 1]
+                          ?.accessibility | percent
+                      "
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="project.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!project.loading">
+                    {{
+                      project?.reports[project?.reports.length - 1]
+                        ?.bestPractices | percent
+                    }} %
+                    <app-progress-bar
+                      [percent]="
+                        project?.reports[project?.reports.length - 1]
+                          ?.bestPractices | percent
+                      "
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="project.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!project.loading">
+                    {{
+                      project?.reports[project?.reports.length - 1]?.seo
+                        | percent
+                    }} %
+                    <app-progress-bar
+                      [percent]="
+                        project?.reports[project?.reports.length - 1]?.seo
+                          | percent
+                      "
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="project.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!project.loading">
+                    {{
+                      project?.reports[project?.reports.length - 1]?.pwa
+                        | percent
+                    }} %
+                    <app-progress-bar
+                      [percent]="
+                        project?.reports[project?.reports.length - 1]?.pwa
+                          | percent
+                      "
+                    ></app-progress-bar>
+                  </ng-container>
+                  <app-loading *ngIf="project.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  {{ project.created_at | date : "yyyy/MM/dd  hh:mm aa" }}
+                </td>
+                <td class="whitespace-nowrap px-6 py-4 flex">
+                  <button
+                    class="capitalize bg-yellow-400 me-3 p-3 rounded-md"
+                    [routerLink]="['./addProject']"
+                    [queryParams]="{
+                      projectId: project.id,
+                      projectName: project.projectName,
+                      platform: project.platform,
+                      frontend: project.frontend,
+                      url: project.url,
+                      backend: project.backend
+                    }"
+                  >
+                    edit
+                  </button>
+                  <button
+                    (click)="generateReport(project)"
+                    [disabled]="project.loading"
+                    class="capitalize bg-green-300 p-3 rounded-md"
+                  >
+                    <ng-container *ngIf="!project.loading">
+                      generate new report
+                    </ng-container>
+                    <ng-container *ngIf="project.loading">
+                      <app-loading></app-loading>
+                    </ng-container>
+                  </button>
+                  <button
+                    class="capitalize bg-teal-400 ms-3 p-3 rounded-md"
+                    [routerLink]="['./reportHistory']"
+                    [queryParams]="{
+                      projectId: project.id
+                    }"
+                  >
+                    report history
+                  </button>
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

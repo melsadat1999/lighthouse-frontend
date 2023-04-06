@@ -1,0 +1,88 @@
+<div class="container m-auto">
+  <div class="overflow-x-auto mt-6">
+    <div class="inline-block min-w-full py-2">
+      <div class="overflow-hidden">
+        <table class="min-w-full text-left text-sm font-light">
+          <thead class="border-b font-medium bg-gray-200">
+            <tr>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                performance
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                accessibility
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                bestPractices
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                seo
+              </th>
+              <th scope="col" class="px-6 py-4 min-w-[110px] max-w-[110px]">
+                pwa
+              </th>
+              <th scope="col" class="px-6 py-4">created at</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="border-b" *ngFor="let report of reports">
+              <ng-container>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!report.loading">
+                    {{ report?.performance | percent }} %
+                    <app-progress-bar
+                      [percent]="report?.performance | percent"
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="report.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!report.loading">
+                    {{ report?.accessibility | percent }} %
+                    <app-progress-bar
+                      [percent]="report?.accessibility | percent"
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="report.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!report.loading">
+                    {{ report?.bestPractices | percent }} %
+                    <app-progress-bar
+                      [percent]="report?.bestPractices | percent"
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="report.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!report.loading">
+                    {{ report?.seo | percent }} %
+                    <app-progress-bar
+                      [percent]="report?.seo | percent"
+                    ></app-progress-bar>
+                  </ng-container>
+
+                  <app-loading *ngIf="report.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  <ng-container *ngIf="!report.loading">
+                    {{ report?.pwa | percent }} %
+                    <app-progress-bar
+                      [percent]="report?.pwa | percent"
+                    ></app-progress-bar>
+                  </ng-container>
+                  <app-loading *ngIf="report.loading"></app-loading>
+                </td>
+                <td class="whitespace-nowrap px-6 py-4">
+                  {{ report.created_at | date : "yyyy/MM/dd  hh:mm aa" }}
+                </td>
+              </ng-container>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
