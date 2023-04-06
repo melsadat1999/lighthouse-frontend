@@ -11,11 +11,11 @@ import { HttpService } from 'src/shared/services/http.service';
   styleUrls: ['./add-project.component.scss'],
 })
 export class AddProjectComponent implements OnInit {
-  frontend: any[] = ['Vuejs', 'ReactJs', 'Anguler'];
-  backend: any[] = ['.NET Core', '.NET MVC', 'Nestjs'];
+  frontend: any[] = ['Vuejs', 'ReactJs', 'Anguler', 'MVC', 'Drupal'];
+  backend: any[] = ['.NET Core', '.NET MVC', 'Nestjs', 'Drupal', 'Python'];
   form: FormGroup = new FormGroup({});
   loading: boolean = false;
-  isEdit:boolean = false;
+  isEdit: boolean = false;
   constructor(
     private fb: FormBuilder,
     private http: HttpService,
@@ -58,13 +58,14 @@ export class AddProjectComponent implements OnInit {
     this.loading = true;
     this.http
       .post(Config.projects, { ...this.form.value })
-      .pipe(delay(200),finalize(() => (this.loading = false)))
+      .pipe(
+        delay(200),
+        finalize(() => (this.loading = false))
+      )
       .subscribe((res) => {
         this.router.navigate(['./projects-statistics']);
-
       });
   }
-
 
   updateProject() {
     this.loading = true;
